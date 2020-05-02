@@ -5,6 +5,7 @@ import java.util.Arrays;
 import card.base.Card;
 import card.base.MonsterCard;
 import deck.InsertCardFailedException;
+import player.Player;
 
 public class Board {
 	public static int boardMaxSize = 8;
@@ -33,13 +34,14 @@ public class Board {
 	}
 
 	public void insertCard(MonsterCard card,int column) {
+		card.setTurn(0);
 		card.setColumn(column);
-		CardColumn[] newBoard = Arrays.copyOf(this.gameBoard,  this.boardSize+1);
+		CardColumn[] newBoard = Arrays.copyOf(gameBoard,  boardSize+1);
 		for(int i=0;i<column;i++) {
-			newBoard[i] = this.gameBoard[i];
+			newBoard[i] = gameBoard[i];
 		}
 		for(int i=column+1;i<boardSize+1;i++) {
-			newBoard[i] = this.gameBoard[i-1];
+			newBoard[i] = gameBoard[i-1];
 			newBoard[i].addColumn(1);
 		}
 		CardColumn cardColumn = new CardColumn(card);

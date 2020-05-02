@@ -20,6 +20,7 @@ public class Player {
 	private Board board;
 	private Deck deck;
 	private Card[] inventory;
+	private int poison;
 
 	public Player(String name, int lifePoint, int startingMana, Deck deck) {
 		this.name = name;
@@ -30,14 +31,22 @@ public class Player {
 		this.inventory = new Card[0];
 		this.board = new Board();
 	}
-
+	public void updateLifePoint() {
+		if(poison!=0) {
+			poison--;
+			changeLifePoint(1);
+		}
+	}
 	public String getName() {
 		return name;
 	}
-	public void healPlayer(int lifePoint) {
-		int totalHP = getLifePoint() + lifePoint;
-		setLifePoint(Math.max(getMaxLifePoint(),totalHP));
+	public int getPoison() {
+		return poison;
 	}
+	public void setPoison(int poison) {
+		this.poison = poison;
+	}
+
 	public int getMana() {
 		return mana;
 	}
@@ -60,6 +69,9 @@ public class Player {
 		lifePoint -= damage;
 		if(lifePoint <= 0) {
 			//this player loses
+		}
+		if(lifePoint > maxLifePoint) {
+			lifePoint = maxLifePoint;
 		}
 	}
 	public MonsterCard getMonsterCard(int column,int row) {
@@ -113,7 +125,7 @@ public class Player {
 		for(int i=0;i<board.getBoardSize();i++) {
 			board.getGameBoard()[i].getFirstRowCard().action(this,opponent);
 			if(board.getGameBoard()[i].getSecondRowCard()!=null) {
-				board.getGameBoard()[i].getSecondRowCard().secondRowAction(this,opponent);
+				board.getGameBoard()[i].getSecondRowCard().action(this,opponent);
 			}
 		}
 	}

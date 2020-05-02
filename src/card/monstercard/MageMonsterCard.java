@@ -4,22 +4,30 @@ import card.base.MonsterCard;
 import player.Player;
 
 public class MageMonsterCard extends MonsterCard{
-	private int count; // for Counting Turn WIP
+	private int attackTurn; // for Counting Turn WIP
 	public MageMonsterCard() {
 		super("Mage","This is description.",3,2,3,2);
-		count = 0;
+		attackTurn = 0;
 	}
 
 	@Override
 	public void secondRowAction(Player attacker,Player defender) {
-		this.action(attacker,defender);
+		this.firstRowAction(attacker,defender);
 	}
 	
-	/*
-	 if(count == 2){
-	 	opponent.changeLifePoint(attackPoint);
-	 	count = 0;
-	 }
-	 count++;
-	 */
+	@Override
+	public void action(Player attacker,Player defender) {
+		if(this.turn==0) return;
+		if(row==0) {
+			firstRowAction(attacker,defender);
+		}
+		else {
+			secondRowAction(attacker,defender);
+		}
+		if(attackTurn == 2) {
+			attacker.changeLifePoint(getAttackPoint());
+			attackTurn = -1;
+		}
+		attackTurn++;
+	}
 }

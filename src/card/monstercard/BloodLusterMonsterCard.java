@@ -14,7 +14,7 @@ public class BloodLusterMonsterCard extends MonsterCard {
 		int plSize = attacker.getBoard().getBoardSize();
 		int opSize = defender.getBoard().getBoardSize();
 		if(2*column+2+opSize < plSize || 2*(plSize-1-column)+2+opSize < plSize) {
-			defender.changeLifePoint(opSize);
+			defender.changeLifePoint(getAttackPoint());
 		}
 		else if(Math.abs(plSize-opSize)%2==0) {
 			int opColumn = column+(opSize-plSize)/2;

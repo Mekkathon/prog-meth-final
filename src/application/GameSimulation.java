@@ -51,22 +51,4 @@ public class GameSimulation {
 			
 		}
 	}
-	
-	static Deck shuffleArray(Deck deck) {
-	{
-		Card[] ar = deck.getDeckList();
-		Random rand = new Random();
-	    for (int i = ar.length - 1; i > 0; i--)
-	    {
-	      int index = rand.nextInt(i + 1);
-	      // Simple swap
-	      Card a = ar[index];
-	      ar[index] = ar[i];
-	      ar[i] = a;
-	    }
-	    Deck shuffle = new Deck(deck.getName(), ar);
-	    return shuffle;
-	}
-
-
 }

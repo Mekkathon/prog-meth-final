@@ -18,12 +18,8 @@ public class MageMonsterCard extends MonsterCard{
 	@Override
 	public void action(Player attacker,Player defender) {
 		if(this.turn==0) return;
-		if(row==0) {
-			firstRowAction(attacker,defender);
-		}
-		else {
-			secondRowAction(attacker,defender);
-		}
+		if(row==0) firstRowAction(attacker,defender);
+		else secondRowAction(attacker,defender);
 		if(attackTurn == 2) {
 			attacker.changeLifePoint(getAttackPoint());
 			attackTurn = -1;

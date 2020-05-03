@@ -11,12 +11,8 @@ public class PriestMonsterCard extends MonsterCard {
 	
 	@Override
 	public void action(Player attacker,Player defender) {
-		if(column!=0) {
-			attacker.getMonsterCard(column-1, 0).changeLifePoint(-2);
-		}
-		if(column!=attacker.getBoard().getBoardSize()) {
-			attacker.getMonsterCard(column+1, 0).changeLifePoint(-2);
-		}
+		if(column!=0) attacker.getMonsterCard(column-1, 0).changeLifePoint(-2);
+		if(column!=attacker.getBoard().getBoardSize()) attacker.getMonsterCard(column+1, 0).changeLifePoint(-2);
 	}
 
 }

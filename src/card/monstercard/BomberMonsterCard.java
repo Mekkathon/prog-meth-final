@@ -18,21 +18,13 @@ public class BomberMonsterCard extends MonsterCard{
 		else if(Math.abs(plSize-opSize)%2==0) {
 			int opColumn = column+(opSize-plSize)/2;
 			defender.getMonsterCard(opColumn,0).changeLifePoint(getAttackPoint());
-			if(opColumn!=0) {
-				defender.getMonsterCard(opColumn-1,0).changeLifePoint(getAttackPoint());
-			}
-			if(opColumn!=opSize) {
-				defender.getMonsterCard(opColumn+1,0).changeLifePoint(getAttackPoint());
-			}
+			if(opColumn!=0) defender.getMonsterCard(opColumn-1,0).changeLifePoint(getAttackPoint());
+			if(opColumn!=opSize) defender.getMonsterCard(opColumn+1,0).changeLifePoint(getAttackPoint());
 		}
 		else {
 			int opRightColumn = (2*column-(plSize-opSize)+1)/2;
-			if(opRightColumn<opSize) {
-				defender.getMonsterCard(opRightColumn,0).changeLifePoint(getAttackPoint());
-			}
-			if(opRightColumn>0) {
-				defender.getMonsterCard(opRightColumn-1,0).changeLifePoint(getAttackPoint());
-			}
+			if(opRightColumn<opSize) defender.getMonsterCard(opRightColumn,0).changeLifePoint(getAttackPoint());
+			if(opRightColumn>0) defender.getMonsterCard(opRightColumn-1,0).changeLifePoint(getAttackPoint());
 		}
 	}
 }

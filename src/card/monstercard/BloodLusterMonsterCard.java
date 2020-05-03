@@ -18,29 +18,19 @@ public class BloodLusterMonsterCard extends MonsterCard {
 		}
 		else if(Math.abs(plSize-opSize)%2==0) {
 			int opColumn = column+(opSize-plSize)/2;
-			if(defender.getMonsterCard(opColumn,0).getLifePoint()<=2) {
-				defender.getMonsterCard(opColumn,0).setLifePoint(0);
-			}else{
-				defender.getMonsterCard(opColumn,0).changeLifePoint(attackPoint);
-			}
+			if(defender.getMonsterCard(opColumn,0).getLifePoint()<=2) defender.getMonsterCard(opColumn,0).setLifePoint(0);
+			else defender.getMonsterCard(opColumn,0).changeLifePoint(attackPoint);
 		}
 		else {
 			int opRightColumn = (2*column-(plSize-opSize)+1)/2;
 			if(opRightColumn<opSize) {
-				if(defender.getMonsterCard(opRightColumn,0).getLifePoint()<=2) {
-					defender.getMonsterCard(opRightColumn,0).setLifePoint(0);
-				}else{
-					defender.getMonsterCard(opRightColumn,0).changeLifePoint(attackPoint);
-				}
+				if(defender.getMonsterCard(opRightColumn,0).getLifePoint()<=2) defender.getMonsterCard(opRightColumn,0).setLifePoint(0);
+				else defender.getMonsterCard(opRightColumn,0).changeLifePoint(attackPoint);
 			}
 			if(opRightColumn>0) {
-				if(defender.getMonsterCard(opRightColumn-1,0).getLifePoint()<=2) {
-					defender.getMonsterCard(opRightColumn-1,0).setLifePoint(0);
-				}else{
-					defender.getMonsterCard(opRightColumn-1,0).changeLifePoint(attackPoint);
-				}
+				if(defender.getMonsterCard(opRightColumn-1,0).getLifePoint()<=2) defender.getMonsterCard(opRightColumn-1,0).setLifePoint(0);
+				else defender.getMonsterCard(opRightColumn-1,0).changeLifePoint(attackPoint);
 			}
 		}
 	}
-
 }

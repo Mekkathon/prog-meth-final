@@ -18,21 +18,15 @@ public class FireMageMonsterCard extends MonsterCard {
 	public void firstRowAction(Player attacker,Player defender) {
 		int plSize = attacker.getBoard().getBoardSize();
 		int opSize = defender.getBoard().getBoardSize();
-		if(2*column+2+opSize < plSize || 2*(plSize-1-column)+2+opSize < plSize) {
-			defender.setPoison(4);
-		}
+		if(2*column+2+opSize < plSize || 2*(plSize-1-column)+2+opSize < plSize) defender.setPoison(4);
 		else if(Math.abs(plSize-opSize)%2==0) {
 			int opColumn = column+(opSize-plSize)/2;
 			defender.getMonsterCard(opColumn,0).setPoison(4);
 		}
 		else {
 			int opRightColumn = (2*column-(plSize-opSize)+1)/2;
-			if(opRightColumn<opSize) {
-				defender.getMonsterCard(opRightColumn,0).setPoison(4);
-			}
-			if(opRightColumn>0) {
-				defender.getMonsterCard(opRightColumn-1,0).setPoison(4);
-			}
+			if(opRightColumn<opSize) defender.getMonsterCard(opRightColumn,0).setPoison(4);
+			if(opRightColumn>0) defender.getMonsterCard(opRightColumn-1,0).setPoison(4);
 		}
 	}
 

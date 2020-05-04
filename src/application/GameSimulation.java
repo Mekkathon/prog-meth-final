@@ -14,8 +14,8 @@ public class GameSimulation {
 	private int turn,startingSide;
 
 	public GameSimulation(Player player,Player opponent,int startingSide) {
-		this.player = player;
-		this.opponent = opponent;
+		this.player = Main.player;
+		this.opponent = Main.opponent;
 		this.startingSide = startingSide;
 		this.turn = 1;
 	}

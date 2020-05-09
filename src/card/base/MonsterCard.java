@@ -1,12 +1,16 @@
 package card.base;
 
+import java.util.ArrayList;
+
+import board.Position;
+import card.monstercard.*;
 import player.Player;
 
 public class MonsterCard extends Card{
 	protected int lifePoint, maxLifePoint, attackPoint, column, row, turn, poison;
 	
 	public MonsterCard(String name, String description, int manaCost, int cardLimit, int lifePoint, int attackPoint) {
-		super(name,description,manaCost,cardLimit);
+		super(name,"Monster",description,manaCost,cardLimit);
 		this.maxLifePoint = lifePoint;
 		this.lifePoint = lifePoint;
 		this.attackPoint = attackPoint;
@@ -16,6 +20,90 @@ public class MonsterCard extends Card{
 		this.poison = 0;
 	}
 	
+	public void changeLifePoint(int damage) {
+		this.lifePoint -= damage;
+		if(this.lifePoint < 0) this.lifePoint = 0;
+		if(this.lifePoint > this.maxLifePoint) this.lifePoint = this.maxLifePoint;
+	}
+	
+	public void action(Player attacker, Player defender) {
+		if(this.turn==0) return;
+		if(row==0) firstRowAction(attacker,defender);
+		else if(this instanceof SecondRow) {
+			SecondRow d = (SecondRow) this;
+			d.secondRowAction(attacker,defender);
+		}
+	}
+	
+	public void firstRowAction(Player attacker, Player defender) {
+		int atSize = attacker.getBoard().getBoardSize();
+		int deSize = defender.getBoard().getBoardSize();
+		
+		ArrayList<Position> pos = getAttackableCard(atSize,deSize);
+		
+		if(pos.isEmpty()) {
+			defender.changeLifePoint(getAttackPoint());
+		}
+		else for(Position p:pos) {
+			attack(defender.getMonsterCard(p),getAttackPoint());
+		}
+	}
+	
+	public void attack(MonsterCard mCard, int dmg) {
+		mCard.changeLifePoint(dmg);
+	}
+	
+	public ArrayList<Position> getAttackableCard(int at, int de) {
+		ArrayList<Position> pos = new ArrayList<Position>();
+		
+		if(Math.abs(at-de)%2==0) {
+			int deColumn = column+(de-at)/2;
+			
+			if(deColumn >= 0 && deColumn < de) pos.add(new Position(deColumn,0));
+		}
+		else {
+			int deRightColumn = (2*column-(at-de)+1)/2;
+			
+			if(deRightColumn  >= 0 && deRightColumn  < de) pos.add(new Position(deRightColumn,0));
+			if(deRightColumn-1>= 0 && deRightColumn-1< de) pos.add(new Position(deRightColumn-1,0));
+		}
+		
+		return pos;
+	}
+	
+	public MonsterCard clone() {
+		MonsterCard temp = new MonsterCard("", "", 0, 0, 0, 0);
+		
+		if(this instanceof ArcherM) temp = new ArcherM();
+		if(this instanceof CannonShooterM) temp = new CannonShooterM();
+		if(this instanceof DarkMageM) temp = new DarkMageM();
+		if(this instanceof DragonM) temp = new DragonM();
+		if(this instanceof FairyM) temp = new FairyM();
+		if(this instanceof FenrirM) temp = new FenrirM();
+		if(this instanceof FireMageM) temp = new FireMageM();
+		if(this instanceof GamblerM) temp = new GamblerM();
+		if(this instanceof GolemM) temp = new GolemM();
+		if(this instanceof KnightM) temp = new KnightM();
+		if(this instanceof KrakenM) temp = new KrakenM();
+		if(this instanceof MageM) temp = new MageM();
+		if(this instanceof MinotaurM) temp = new MinotaurM();
+		if(this instanceof OrcM) temp = new OrcM();
+		if(this instanceof PheonixM) temp = new PheonixM();
+		if(this instanceof PriestM) temp = new PriestM();
+		if(this instanceof RoyalKnightM) temp = new RoyalKnightM();
+		if(this instanceof UndeadM) temp = new UndeadM();
+		
+		return temp;
+	}
+	
+	public void updateLifePoint() {
+		if(poison!=0) {
+			poison--;
+			changeLifePoint(1);
+		}
+	}
+	
+	//getter-setter
 	public void setPoison(int value) {
 		poison=value;
 	}
@@ -44,51 +132,8 @@ public class MonsterCard extends Card{
 		return attackPoint;
 	}
 	public void setAttackPoint(int attackPoint) {
+		if(attackPoint<1) attackPoint = 1;
 		this.attackPoint = attackPoint;
-	}
-	public void changeLifePoint(int damage) {
-		this.lifePoint -= damage;
-		if(this.lifePoint < 0) {
-			this.lifePoint = 0;
-		}
-		if(this.lifePoint > this.maxLifePoint) {
-			this.lifePoint = this.maxLifePoint;
-		}
-	}
-	public void action(Player attacker, Player defender) {
-		if(this.turn==0) return;
-		if(row==0) {
-			firstRowAction(attacker,defender);
-		}
-		else {
-			secondRowAction(attacker,defender);
-		}
-	}
-	public void firstRowAction(Player attacker, Player defender) {
-		int plSize = attacker.getBoard().getBoardSize();
-		int opSize = defender.getBoard().getBoardSize();
-		if(2*column+2+opSize < plSize || 2*(plSize-1-column)+2+opSize < plSize) {
-			defender.changeLifePoint(getAttackPoint());
-		}
-		else if(Math.abs(plSize-opSize)%2==0) {
-			int opColumn = column+(opSize-plSize)/2;
-			defender.getMonsterCard(opColumn,0).changeLifePoint(getAttackPoint());
-		}
-		else {
-			int opRightColumn = (2*column-(plSize-opSize)+1)/2;
-			if(opRightColumn<opSize) {
-				defender.getMonsterCard(opRightColumn,0).changeLifePoint(getAttackPoint());
-			}
-			if(opRightColumn>0) {
-				defender.getMonsterCard(opRightColumn-1,0).changeLifePoint(getAttackPoint());
-			}
-		}
-	}
-	public void secondRowAction(Player attacker, Player defender) {
-		
-	}
-	public void deathTrigger(Player player) {
-		
 	}
 	public int getMaxLifePoint() {
 		return maxLifePoint;
@@ -102,12 +147,5 @@ public class MonsterCard extends Card{
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
-	public void updateLifePoint() {
-		if(poison!=0) {
-			poison--;
-			changeLifePoint(1);
-		}
-	}
-	//public abstract void attack();
 	
 }

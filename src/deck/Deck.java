@@ -26,7 +26,6 @@ public class Deck {
 		for(int i = 0; i < this.deckSize ; i++) {
 			if(deckList[i] instanceof MonsterCard) cMon++; 
 			if(deckList[i] instanceof SpellCard) cSpell++; 
-			if(deckList[i] instanceof TrapCard) cTrap++; 
 			if(card == this.deckList[i]) count++;
 		}
 		if(count >= card.getCardLimit()){

@@ -4,12 +4,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 import board.Board;
-import board.CardColumn;
-import card.*;
+import board.Position;
 import card.base.*;
 
 import deck.Deck;
-import deck.RemoveCardFailedException;
 
 
 public class Player {
@@ -48,12 +46,16 @@ public class Player {
 		if(lifePoint > maxLifePoint) lifePoint = maxLifePoint;
 	}
 	
-	public MonsterCard getMonsterCard(int column,int row) {
+	public MonsterCard getMonsterCard(Position p) {
+		int column = p.getColumn();
+		int row = p.getRow();
 		if(row==0) return board.getGameBoard()[column].getFirstRowCard();
 		else return board.getGameBoard()[column].getSecondRowCard();
 	}
 	
-	public void setMonsterCard(MonsterCard monsterCard,int column, int row) {
+	public void setMonsterCard(MonsterCard monsterCard,Position p) {
+		int column = p.getColumn();
+		int row = p.getRow();
 		if(row==0) board.getGameBoard()[column].setFirstRowCard(monsterCard);
 		else board.getGameBoard()[column].setSecondRowCard(monsterCard);
 	}
@@ -119,6 +121,7 @@ public class Player {
 	
 	public void addMaxMana() {
 		maxMana++;
+		if(maxMana>10) maxMana=10;
 	}
 	
 	//getter-setter

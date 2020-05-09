@@ -1,25 +1,24 @@
 package card.monstercard;
 
 import card.base.MonsterCard;
+import card.base.SecondRow;
 import player.Player;
 
-public class MageMonsterCard extends MonsterCard{
+public class ArcherM extends MonsterCard implements SecondRow{
 	private int attackTurn; // for Counting Turn WIP
-	public MageMonsterCard() {
-		super("Mage","This is description.",3,2,3,2);
+	public ArcherM() {
+		super("Archer","This is description.",3,2,3,2);
 		attackTurn = 0;
 	}
 
-	@Override
 	public void secondRowAction(Player attacker,Player defender) {
 		this.firstRowAction(attacker,defender);
 	}
 	
 	@Override
 	public void action(Player attacker,Player defender) {
-		if(this.turn==0) return;
-		if(row==0) firstRowAction(attacker,defender);
-		else secondRowAction(attacker,defender);
+		super.action(attacker, defender);
+		
 		if(attackTurn == 2) {
 			attacker.changeLifePoint(getAttackPoint());
 			attackTurn = -1;

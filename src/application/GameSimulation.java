@@ -1,26 +1,27 @@
 package application;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import card.base.Card;
 import card.base.MonsterCard;
 import card.base.SpellCard;
-import card.base.TrapCard;
-import deck.Deck;
 import player.Player;
 
 public class GameSimulation {
 	
 	private Player player;
 	private Player opponent;
-	private int turn,startingSide;
+	private static int turnStatus=0,turn=0;
+	private int startingSide;
 
 	public GameSimulation(Player player,Player opponent,int startingSide) {
 		this.player = player;
 		this.opponent = opponent;
 		this.startingSide = startingSide;
-		this.turn = 1;
+	}
+	
+	public static void setTurnStatus(int tS) {
+		turnStatus = tS;
 	}
 	
 	public void run() {
@@ -37,7 +38,8 @@ public class GameSimulation {
 			player.setMana(player.getMaxMana());
 			
 			//attacker phase
-			player.attack(opponent);
+			if(turnStatus==0) player.attack(opponent);
+			else turnStatus--;
 			if(opponent.getLifePoint() == 0) {
 				//attacker win
 				break;
@@ -49,6 +51,8 @@ public class GameSimulation {
 			opponent.drawCard(1);
 			opponent.setMana(opponent.getMaxMana());
 			opponentSimulate();
+			if(turnStatus==0) opponent.attack(player);
+			else turnStatus--;
 			opponent.attack(player);
 			if(player.getLifePoint() == 0) {
 				//attacker win
@@ -75,10 +79,7 @@ public class GameSimulation {
 					opponent.getBoard().insertCard((MonsterCard) temp, m);
 				}
 				if(temp instanceof SpellCard) {
-					
-				}
-				if(temp instanceof TrapCard) {
-			
+					((SpellCard) temp).equip(opponent, player);
 				}
 			}
 		}

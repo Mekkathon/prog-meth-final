@@ -3,9 +3,9 @@ package card.monstercard;
 import card.base.MonsterCard;
 import java.util.Random;
 
-public class GamblerMonsterCard extends MonsterCard {
+public class GamblerM extends MonsterCard {
 
-	public GamblerMonsterCard() {
+	public GamblerM() {
 		super("Gambler","This is description.",4,1,6,1);
 	}
 	

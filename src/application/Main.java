@@ -2,7 +2,9 @@ package application;
 
 import java.util.Scanner;
 
+import gui.CardDeckCount;
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import player.Player;
@@ -22,11 +24,12 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		primaryStage.setScene(SceneManager.currentScene);
-		primaryStage.setWidth(800);
+		primaryStage.setWidth(960);
 		primaryStage.setHeight(600);
 		primaryStage.setTitle("Isekai Chess!");
 		primaryStage.getIcons().add(new Image("chess.png"));
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		
 	}
 }

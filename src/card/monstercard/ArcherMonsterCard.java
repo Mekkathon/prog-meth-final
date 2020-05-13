@@ -3,11 +3,15 @@ package card.monstercard;
 import card.base.MonsterCard;
 import player.Player;
 
-public class WerewolfMonsterCard extends MonsterCard {
+public class ArcherMonsterCard extends MonsterCard {
 
-	public WerewolfMonsterCard() {
-		super("Werewolf", "This is description.", 4, 1, 3, 4);
-		setTurn(1);
+	public ArcherMonsterCard() {
+		super("Archer","This is description.",4,2,3,2);
+	}
+	
+	@Override
+	public void secondRowAction(Player attacker, Player defender) {
+		firstRowAction(attacker,defender);
 	}
 	
 	@Override

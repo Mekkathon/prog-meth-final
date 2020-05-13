@@ -1,21 +1,25 @@
 package card.base;
 
 public class Card {
+	
 	protected String name;
+	protected String cardType;
 	protected String description;
 	protected int manaCost;
 	protected int cardLimit;
-	public Card(String name, String description, int manaCost, int cardLimit) {
+	public Card(String name, String cardType, String description, int manaCost, int cardLimit) {
 		this.name = name;
+		this.cardType = cardType;
 		this.description = description;
 		this.manaCost = manaCost;
 		this.cardLimit = cardLimit;
 	}
-
 	public String getName() {
 		return this.name;
 	}
-	
+	public String getCardType() {
+		return this.cardType;
+	}
 	public String getDescription() {
 		return this.description;
 	}

@@ -13,6 +13,7 @@ public class BeastTamerMonsterCard extends MonsterCard {
 	@Override
 	public void deathTrigger(Player player) {
 		MonsterCard beast = new MonsterCard("Beast","This is description.",0,0,3,1);
+		beast.setTurn(1);
 		player.getBoard().insertCard(beast,column);
 		player.getBoard().insertCard(beast,column);
 	}

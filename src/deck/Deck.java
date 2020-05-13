@@ -2,11 +2,15 @@ package deck;
 
 import java.util.Arrays;
 import card.base.Card;
+import card.base.*;
 
 public class Deck {
 	private String name;
 	private int deckSize;
 	Card [] deckList;
+	private static int MonLimit = 16;
+	private static int SpellLimit = 8;
+	private static int TrapLimit = 2;
 	
 	public Deck(String name, Card[] deckList) {
 		this.name = name;
@@ -18,14 +22,24 @@ public class Deck {
 	}
 
 	public int insertCard(Card card) throws InsertCardFailedException{
-		int count = 0;
+		int count = 0,cMon=0,cSpell=0,cTrap=0;
 		for(int i = 0; i < this.deckSize ; i++) {
-			if(card == this.deckList[i]) {
-				count++;
-			}
+			if(deckList[i] instanceof MonsterCard) cMon++; 
+			if(deckList[i] instanceof SpellCard) cSpell++; 
+			if(deckList[i] instanceof TrapCard) cTrap++; 
+			if(card == this.deckList[i]) count++;
 		}
 		if(count >= card.getCardLimit()){
 			throw new InsertCardFailedException("Exceeding the limit of the same cards in the deck");
+		}
+		if(cMon >= MonLimit) {
+			throw new InsertCardFailedException("You can't have more than 16 monster cards in the deck");
+		}
+		if(cSpell >= SpellLimit) {
+			throw new InsertCardFailedException("You can't have more than 8 spell cards in the deck");
+		}
+		if(cTrap >= TrapLimit) {
+			throw new InsertCardFailedException("You can't have more than 2 trap cards in the deck");
 		}
 		Card[] newDeck = Arrays.copyOf(this.deckList,  this.deckSize+1);
 		newDeck[this.deckSize] = card;
